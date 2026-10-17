@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 template<typename Y>
-class Stack_Lincked {
+class Stack_Linked {
     private:
         struct Node {
             Y data;
@@ -15,18 +15,18 @@ class Stack_Lincked {
 
     Node* topPtr;
 
-    void copy(const Stack_Lincked<Y>& other);
+    void copy(const Stack_Linked<Y>& other);
     void erase();
 
     public:
 
-    Stack_Lincked();
-    Stack_Lincked(const Stack_Lincked<Y>& other);
-    Stack_Lincked<Y>& operator=(const Stack_Lincked<Y>& other);
-    ~Stack_Lincked();
+    Stack_Linked();
+    Stack_Linked(const Stack_Linked<Y>& other);
+    Stack_Linked<Y>& operator=(const Stack_Linked<Y>& other);
+    ~Stack_Linked();
 
-    Stack_Lincked(Stack_Lincked<Y>&& other);
-    Stack_Lincked<Y>& operator=(Stack_Lincked<Y>& other);
+    Stack_Linked(Stack_Linked<Y>&& other);
+    Stack_Linked<Y>& operator=(Stack_Linked<Y>& other);
 
     void push(Y add);
     void pop();
@@ -39,32 +39,28 @@ class Stack_Lincked {
 
 // O(n)
 template<typename Y>
-void Stack_Lincked<Y>::copy(const Stack_Lincked<Y>& other) {
+void Stack_Linked<Y>::copy(const Stack_Linked<Y>& other) {
 
-    if (!other.topPtr) {
-        topPtr = nullptr;
-        return;
-    }
+   if (!other.topPtr) {
+       topPtr = nullptr;
+       return;
+   }
 
     topPtr = new Node(other.topPtr->data, nullptr);
-    Node* next = other.topPtr->link;
-    Node* last = topPtr->link;;
+    Node* curr = other.topPtr->next;
+    Node* prev = topPtr;
 
-    while (next) {
-        last = last->link = new Node(next->data, nullptr);
-        next = next->link;
+    while (curr) {
+        prev = prev->next = new Node(curr->data, nullptr);
+        curr = curr->next;
     }
-
-
 }
 
 // O(n)
 template<typename Y>
-void Stack_Lincked<Y>::erase() {
+void Stack_Linked<Y>::erase() {
     while (!empty()) {
-        Node* temp = topPtr;
-        topPtr = topPtr->next;
-        delete temp;
+        pop();
     }
 }
 
@@ -72,16 +68,16 @@ void Stack_Lincked<Y>::erase() {
 
 
 template<typename Y>
-Stack_Lincked<Y>::Stack_Lincked(): topPtr(nullptr) {
+Stack_Linked<Y>::Stack_Linked(): topPtr(nullptr) {
 }
 
 template<typename Y>
-Stack_Lincked<Y>::Stack_Lincked(const Stack_Lincked<Y> &other) {
+Stack_Linked<Y>::Stack_Linked(const Stack_Linked<Y> &other) {
     copy(other);
 }
 
 template<typename Y>
-Stack_Lincked<Y> & Stack_Lincked<Y>::operator=(const Stack_Lincked<Y> &other) {
+Stack_Linked<Y> & Stack_Linked<Y>::operator=(const Stack_Linked<Y> &other) {
     if (this != &other) {
         copy(other);
         erase();
@@ -91,18 +87,18 @@ Stack_Lincked<Y> & Stack_Lincked<Y>::operator=(const Stack_Lincked<Y> &other) {
 }
 
 template<typename Y>
-Stack_Lincked<Y>::~Stack_Lincked() {
+Stack_Linked<Y>::~Stack_Linked() {
     erase();
 }
 
 template<typename Y>
-Stack_Lincked<Y>::Stack_Lincked(Stack_Lincked<Y> &&other) {
+Stack_Linked<Y>::Stack_Linked(Stack_Linked<Y> &&other) {
     topPtr = other.topPtr;
     other.topPtr = nullptr;
 }
 
 template<typename Y>
-Stack_Lincked<Y> & Stack_Lincked<Y>::operator=(Stack_Lincked<Y> &other) {
+Stack_Linked<Y> & Stack_Linked<Y>::operator=(Stack_Linked<Y> &other) {
     if (this != &other) {
         erase();
         topPtr = other.topPtr;
@@ -115,7 +111,7 @@ Stack_Lincked<Y> & Stack_Lincked<Y>::operator=(Stack_Lincked<Y> &other) {
 
 // O(1)
 template<typename Y>
-void Stack_Lincked<Y>::push(Y add) {
+void Stack_Linked<Y>::push(Y add) {
     Node* temp = new Node(add, topPtr);
     topPtr = temp;
 
@@ -123,7 +119,7 @@ void Stack_Lincked<Y>::push(Y add) {
 
 // O(1)
 template<typename Y>
-void Stack_Lincked<Y>::pop() {
+void Stack_Linked<Y>::pop() {
     if (empty())
         throw std::underflow_error("Stack is empty");
 
@@ -134,7 +130,7 @@ void Stack_Lincked<Y>::pop() {
 
 // O(1)
 template<typename Y>
-Y & Stack_Lincked<Y>::top() {
+Y & Stack_Linked<Y>::top() {
     if (empty())
         throw std::underflow_error("Stack is empty");
     return topPtr->data;
@@ -142,7 +138,7 @@ Y & Stack_Lincked<Y>::top() {
 
 // O(1)
 template<typename Y>
-const Y & Stack_Lincked<Y>::top() const {
+const Y & Stack_Linked<Y>::top() const {
     if (empty())
         throw std::underflow_error("Stack is empty");
     return topPtr->data;
@@ -150,7 +146,7 @@ const Y & Stack_Lincked<Y>::top() const {
 
 // O(1)
 template<typename Y>
-bool Stack_Lincked<Y>::empty() const {
+bool Stack_Linked<Y>::empty() const {
     return topPtr == nullptr;
 }
 

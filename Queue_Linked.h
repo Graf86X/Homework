@@ -2,7 +2,7 @@
 #define DATA_STRUCTURES_QUEUE_LINKED_H
 
 template<typename Y>
-class Queue_Lincked {
+class Queue_Linked {
     private:
         struct Node {
             Y data;
@@ -14,17 +14,17 @@ class Queue_Lincked {
         Node* frontPtr;
         Node* topPtr;
 
-        void copy(const Queue_Lincked<Y>& other);
+        void copy(const Queue_Linked<Y>& other);
         void erase();
 
     public:
-        Queue_Lincked();
-        Queue_Lincked(const Queue_Lincked<Y>& other);
-        Queue_Lincked<Y>& operator=(const Queue_Lincked<Y>& other);
-        ~Queue_Lincked();
+        Queue_Linked();
+        Queue_Linked(const Queue_Linked<Y>& other);
+        Queue_Linked<Y>& operator=(const Queue_Linked<Y>& other);
+        ~Queue_Linked();
 
-        Queue_Lincked(Queue_Lincked<Y>&& other);
-        Queue_Lincked<Y>& operator=(Queue_Lincked<Y>&& other);
+        Queue_Linked(Queue_Linked<Y>&& other);
+        Queue_Linked<Y>& operator=(Queue_Linked<Y>&& other);
 
         void push(Y add);
         void pop();
@@ -36,7 +36,7 @@ class Queue_Lincked {
 // Pomoshtni funkcii
 
 template<typename Y>
-void Queue_Lincked<Y>::copy(const Queue_Lincked<Y> &other) {
+void Queue_Linked<Y>::copy(const Queue_Linked<Y> &other) {
      if (!other.frontPtr) {
          frontPtr = nullptr;
          topPtr = nullptr;
@@ -52,7 +52,7 @@ void Queue_Lincked<Y>::copy(const Queue_Lincked<Y> &other) {
 
 // O(n)
 template<typename Y>
-void Queue_Lincked<Y>::erase() {
+void Queue_Linked<Y>::erase() {
     while (!empty()) {
         pop();
     }
@@ -61,16 +61,16 @@ void Queue_Lincked<Y>::erase() {
 // Rule of 6
 
 template<typename Y>
-Queue_Lincked<Y>::Queue_Lincked():frontPtr(nullptr), topPtr(nullptr) {
+Queue_Linked<Y>::Queue_Linked():frontPtr(nullptr), topPtr(nullptr) {
 }
 
 template<typename Y>
-Queue_Lincked<Y>::Queue_Lincked(const Queue_Lincked<Y> &other):frontPtr(nullptr), topPtr(nullptr) {
+Queue_Linked<Y>::Queue_Linked(const Queue_Linked<Y> &other):frontPtr(nullptr), topPtr(nullptr) {
     copy(other);
 }
 
 template<typename Y>
-Queue_Lincked<Y> & Queue_Lincked<Y>::operator=(const Queue_Lincked<Y> &other) {
+Queue_Linked<Y> & Queue_Linked<Y>::operator=(const Queue_Linked<Y> &other) {
     if (this != &other) {
         erase();
         topPtr = frontPtr = nullptr;
@@ -81,12 +81,12 @@ Queue_Lincked<Y> & Queue_Lincked<Y>::operator=(const Queue_Lincked<Y> &other) {
 }
 
 template<typename Y>
-Queue_Lincked<Y>::~Queue_Lincked() {
+Queue_Linked<Y>::~Queue_Linked() {
     erase();
 }
 
 template<typename Y>
-Queue_Lincked<Y>::Queue_Lincked(Queue_Lincked<Y> &&other) {
+Queue_Linked<Y>::Queue_Linked(Queue_Linked<Y> &&other) {
     frontPtr = other.frontPtr;
     topPtr = other.topPtr;
 
@@ -95,7 +95,7 @@ Queue_Lincked<Y>::Queue_Lincked(Queue_Lincked<Y> &&other) {
 }
 
 template<typename Y>
-Queue_Lincked<Y> & Queue_Lincked<Y>::operator=(Queue_Lincked<Y> &&other) {
+Queue_Linked<Y> & Queue_Linked<Y>::operator=(Queue_Linked<Y> &&other) {
     if (this != &other) {
         erase();
         frontPtr = other.frontPtr;
@@ -111,7 +111,7 @@ Queue_Lincked<Y> & Queue_Lincked<Y>::operator=(Queue_Lincked<Y> &&other) {
 
 // O(1)
 template<typename Y>
-void Queue_Lincked<Y>::push(Y add) {
+void Queue_Linked<Y>::push(Y add) {
     Node* temp = new Node(add);
 
     if (empty())
@@ -124,7 +124,7 @@ void Queue_Lincked<Y>::push(Y add) {
 
 // O(1)
 template<typename Y>
-void Queue_Lincked<Y>::pop() {
+void Queue_Linked<Y>::pop() {
     if (empty())
         throw std::underflow_error("Queue is empty");
 
@@ -139,7 +139,7 @@ void Queue_Lincked<Y>::pop() {
 
 // O(1)
 template<typename Y>
-Y & Queue_Lincked<Y>::front() {
+Y & Queue_Linked<Y>::front() {
     if (empty())
         throw std::underflow_error("Queue is empty");
     return frontPtr->data;
@@ -147,7 +147,7 @@ Y & Queue_Lincked<Y>::front() {
 
 // O(1)
 template<typename Y>
-const Y & Queue_Lincked<Y>::front() const {
+const Y & Queue_Linked<Y>::front() const {
     if (empty())
         throw std::underflow_error("Queue is empty");
     return frontPtr->data;
@@ -155,7 +155,7 @@ const Y & Queue_Lincked<Y>::front() const {
 
 // O(1)
 template<typename Y>
-bool Queue_Lincked<Y>::empty() const {
+bool Queue_Linked<Y>::empty() const {
     return frontPtr == nullptr;
 }
 

@@ -21,7 +21,6 @@ class Stack_Array {
     bool full() const;
 };
 
-// Pomoshtni funkcii
 template<typename Y>
 Stack_Array<Y>::Stack_Array():top_index(0) {
 
